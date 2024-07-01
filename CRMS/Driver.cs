@@ -40,12 +40,12 @@ namespace CRMS
             table.Columns.Add("Name", typeof(string));
             table.Columns.Add("ID", typeof(string));
             table.Columns.Add("Phone", typeof(string));
-            table.Columns.Add("CNIC", typeof(string));
+            table.Columns.Add("Passport", typeof(string));
 
             // Add data to the DataTable
             foreach (Class1 driver in Drivers)
             {
-                table.Rows.Add(driver.Name, driver.ID, driver.Contact, driver.Cnic);
+                table.Rows.Add(driver.Name, driver.ID, driver.Contact, driver.Passport);
             }
 
             // Set the DataTable as the DataGridView's data source
@@ -126,7 +126,7 @@ namespace CRMS
                     label6.Visible = false;
                     textBox5.Visible = false;
                     textBox1.Text = driver.Name;
-                    textBox2.Text = driver.Cnic;
+                    textBox2.Text = driver.Passport;
                     textBox4.Text = driver.Contact;
                     textBox3.Text = driver.ID;
                     button4.Visible = true;
@@ -199,7 +199,7 @@ namespace CRMS
                     label6.Visible = false;
 
                     textBox1.Text = driver.Name;
-                    textBox2.Text = driver.Cnic;
+                    textBox2.Text = driver.Passport;
                     textBox4.Text = driver.Contact;
                     textBox3.Text = driver.ID;
                     textBox5.Visible = false;
@@ -220,7 +220,7 @@ namespace CRMS
                 Drivers[index].Name = textBox1.Text;
                 Drivers[index].ID = textBox3.Text;
                 Drivers[index].Contact = textBox4.Text;
-                Drivers[index].Cnic = textBox2.Text;
+                Drivers[index].Passport = textBox2.Text;
 
                 textBox1.Clear();
                 textBox2.Clear();

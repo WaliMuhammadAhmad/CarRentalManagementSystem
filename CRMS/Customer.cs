@@ -33,7 +33,7 @@ namespace CRMS
             table.Columns.Add("Name", typeof(string));
             table.Columns.Add("ID", typeof(string));
             table.Columns.Add("Phone", typeof(string));
-            table.Columns.Add("CNIC", typeof(string));
+            table.Columns.Add("Passport", typeof(string));
 
             // Add data to the DataTable
             foreach (Cusromer driver in customer)

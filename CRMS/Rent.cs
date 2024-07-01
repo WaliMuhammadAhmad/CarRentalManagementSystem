@@ -60,7 +60,7 @@ namespace CRMS
             { 
                 list.Add(new rented(comboBox1.Text,comboBox2.Text,comboBox3.Text, int.Parse(textBox1.Text)));
                 string num = comboBox3.Text;
-              foreach(rented rented in list)
+                foreach(rented rented in list)
                 {
                     if (rented.Cnumber == comboBox3.Text)
                     {
@@ -71,6 +71,11 @@ namespace CRMS
                         MessageBox.Show("invalid car number");
                     }
                 }
+                MessageBox.Show("Car Rented successfully!");
+            }
+            else
+            {
+                MessageBox.Show("Please fill in all fields!");
             }
         }
 

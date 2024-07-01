@@ -33,7 +33,7 @@ namespace CRMS
             DataTable table = new DataTable();
             table.Columns.Add("ID", typeof(string));
             table.Columns.Add("Car Type", typeof(string));
-            table.Columns.Add("Model Name", typeof(string));
+            table.Columns.Add("Car Name", typeof(string));
             table.Columns.Add("Rent Per day", typeof(string));
 
             // Add data to the DataTable
@@ -92,8 +92,7 @@ namespace CRMS
                     textBox4.Clear();
                     // Update the DataGridView
                     DataGridView();
-                
-              
+
             }
             else
             {
@@ -105,7 +104,7 @@ namespace CRMS
         //----------remove car-----------------------
         private void button4_Click(object sender, EventArgs e)
         {
-            label5.Text = "Remove Driver";
+            label5.Text = "Remove Car";
 
             textBox2.Visible = false;
             textBox4.Visible = false;
@@ -134,7 +133,7 @@ namespace CRMS
             }
             else
             {
-                MessageBox.Show("Car with that No does not Exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Car number does not Exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             textBox1.Clear();

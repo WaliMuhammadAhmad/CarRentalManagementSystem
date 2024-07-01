@@ -89,9 +89,9 @@
             this.label2.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(251, 126);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 18);
+            this.label2.Size = new System.Drawing.Size(65, 18);
             this.label2.TabIndex = 6;
-            this.label2.Text = "CNIC:";
+            this.label2.Text = "Passport:";
             // 
             // label1
             // 
@@ -208,9 +208,9 @@
             this.label6.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(251, 87);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 18);
+            this.label6.Size = new System.Drawing.Size(90, 18);
             this.label6.TabIndex = 18;
-            this.label6.Text = "Driver ID:";
+            this.label6.Text = "Driver Name:";
             this.label6.Visible = false;
             // 
             // button4
