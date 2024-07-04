@@ -34,6 +34,7 @@ namespace CRMS
             }
         }
 
+        // Do not remove or else they will throw visual error
         private void label5_Click(object sender, EventArgs e)
         {
 

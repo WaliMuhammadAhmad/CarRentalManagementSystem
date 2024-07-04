@@ -23,16 +23,6 @@ namespace CRMS
             label5.Text = "Add Driver";
         }
 
-
-
-        private void Driver_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-
         private void DataGridView()
         {
             // Create a DataTable to hold the data
@@ -88,9 +78,12 @@ namespace CRMS
             }
         }
 
-//Remove
-
+        // Do not Remove
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void Driver_Load(object sender, EventArgs e)
         {
 
         }

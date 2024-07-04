@@ -46,25 +46,6 @@ namespace CRMS
             dataGridView1.DataSource = table;
         }
 
-        private void Cars_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
         //-----------------addedd-------------------
         private void button1_Click(object sender, EventArgs e)
         {
@@ -163,11 +144,6 @@ namespace CRMS
             this.Hide();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_MouseEnter(object sender, EventArgs e)
         {
             button1.BackColor = Color.Brown;
@@ -203,11 +179,6 @@ namespace CRMS
         {
             button2.BackColor = Color.White;
             button2.ForeColor = Color.Black;
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
