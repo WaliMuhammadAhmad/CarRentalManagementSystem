@@ -16,7 +16,6 @@ namespace CRMS
     public partial class Cars : Form
     {
         public static List<Car> cars = new List<Car>();
-        Car obj;
         bool flag = true;
         public Cars()
         {

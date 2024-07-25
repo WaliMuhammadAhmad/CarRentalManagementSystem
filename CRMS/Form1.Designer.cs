@@ -2,6 +2,7 @@
 {
     partial class Form1
     {
+        DatabaseHelper dbHelper = new DatabaseHelper();
         /// <summary>
         /// Required designer variable.
         /// </summary>
