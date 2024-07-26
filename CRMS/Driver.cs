@@ -16,6 +16,7 @@ namespace CRMS
         Class1 obj=new Class1();
         int index = 0;
         bool flag = true;
+        DatabaseHelper dbHelper = new DatabaseHelper();
         public Driver()
         {
             InitializeComponent();
@@ -42,10 +43,6 @@ namespace CRMS
             dataGridView1.DataSource = table;
         }
 
-
-
-
-
         private void button1_Click(object sender, EventArgs e)
 
         {
@@ -64,13 +61,14 @@ namespace CRMS
             if (textBox1.Text!="" && textBox2.Text !="" && textBox3.Text !="" && textBox4.Text!="")
             {
                 
-                    Drivers.Add(new Class1(textBox3.Text, textBox1.Text, textBox4.Text, textBox2.Text));
-                    MessageBox.Show("Driver added successfully!");
-                    textBox1.Clear();
-                    textBox2.Clear();
-                    textBox3.Clear();
-                    textBox4.Clear();
-                    DataGridView();
+                Drivers.Add(new Class1(textBox3.Text, textBox1.Text, textBox4.Text, textBox2.Text));
+                dbHelper.AddDriver(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text);
+                MessageBox.Show("Driver added successfully!");
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                DataGridView();
             }
             else
             {
@@ -141,6 +139,7 @@ namespace CRMS
                 textBox5.Clear();
                 label6.Visible = false;
                 textBox5.Visible = false;
+                dbHelper.DeleteDriver(obj.ID);
                 MessageBox.Show("Driver Removed Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DataGridView();
                 button4.Visible = false;
@@ -210,11 +209,11 @@ namespace CRMS
             if (flag == false && index != -1 && index < Drivers.Count)
             {
                 label7.Visible = true;
-                Drivers[index].Name = textBox1.Text;
                 Drivers[index].ID = textBox3.Text;
-                Drivers[index].Contact = textBox4.Text;
+                Drivers[index].Name = textBox1.Text;
                 Drivers[index].Passport = textBox2.Text;
-
+                Drivers[index].Contact = textBox4.Text;
+                dbHelper.UpdateDriver(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text);
                 textBox1.Clear();
                 textBox2.Clear();
                 textBox3.Clear();

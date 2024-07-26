@@ -18,13 +18,13 @@ namespace CRMS
         Cusromer obj;
         bool flag = true;
         int index = 0;
+        DatabaseHelper dbHelper = new DatabaseHelper();
         public Customer()
         {
             InitializeComponent();
             DataGridView();
             label5.Text = "Add Customer";
         }
-
 
         private void DataGridView()
         {
@@ -106,8 +106,8 @@ namespace CRMS
 
             if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "")
             {
-
                 customer.Add(new Cusromer(textBox3.Text, textBox1.Text, textBox4.Text, textBox2.Text));
+                dbHelper.AddCustomer(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text);
                 MessageBox.Show("Customer added successfully!");
                 textBox1.Clear();
                 textBox2.Clear();
@@ -164,9 +164,12 @@ namespace CRMS
 
         private void button4_Click_1(object sender, EventArgs e)
         {
+            string id = textBox5.Text;
+
             if (flag == false)
             {
                 customer.Remove(obj);
+                dbHelper.DeleteCustomer(obj.ID);
                 textBox1.Clear();
                 textBox2.Clear();
                 textBox3.Clear();
@@ -239,10 +242,11 @@ namespace CRMS
             if (flag == false && index != -1 && index < customer.Count)
             {
                 label7.Visible = true;
-                customer[index].Name = textBox1.Text;
                 customer[index].ID = textBox3.Text;
-                customer[index].Contact = textBox4.Text;
+                customer[index].Name = textBox1.Text;
                 customer[index].Cnic = textBox2.Text;
+                customer[index].Contact = textBox4.Text;
+                dbHelper.UpdateCustomer(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text);
 
                 textBox1.Clear();
                 textBox2.Clear();

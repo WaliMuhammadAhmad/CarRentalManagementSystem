@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace CRMS
 {
@@ -14,7 +15,7 @@ namespace CRMS
 
         public DatabaseHelper()
         {
-            connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["CarRentalCompany"].ConnectionString;
+            connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         }
 
         public void OpenConnection()
@@ -25,7 +26,6 @@ namespace CRMS
                 {
                     connection.Open();
                     Console.WriteLine("Connection Opened.");
-                    // Your database operations go here
                 }
                 catch (Exception ex)
                 {
@@ -38,16 +38,16 @@ namespace CRMS
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT COUNT(*) FROM Admins WHERE Username = @Username AND Password = @Password";
+                string query = "SELECT COUNT(*) FROM Admin WHERE Username = @Username AND Password = @Password";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Username", username);
                 command.Parameters.AddWithValue("@Password", password);
-
+                
                 try
                 {
                     connection.Open();
                     int result = (int)command.ExecuteScalar();
-                    return result > 0;
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -57,15 +57,38 @@ namespace CRMS
             }
         }
 
-        public void AddCustomer(string name, string address, string phoneNumber)
+        //public void TotalCars(Boolean aval)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        string query = "SELECT * FROM Cars WHERE Avalaible = @avalaible";
+        //        SqlCommand command = new SqlCommand(query, connection);
+        //        command.Parameters.AddWithValue("@avalaible", aval);
+
+        //        try
+        //        {
+        //            connection.Open();
+        //            int result = (int)command.ExecuteScalar();
+        //            //return result;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine("An error occurred: " + ex.Message);
+        //            //return false;
+        //        }
+        //    }
+        //}
+
+        public void AddCustomer(string id, string name, string passport, string contact)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Customers (Name, Address, PhoneNumber) VALUES (@Name, @Address, @PhoneNumber)";
+                string query = "INSERT INTO Customers (Id, Name, Passport, Contact) VALUES (@Id, @Name, @Passport, @Contact)";
                 SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
                 command.Parameters.AddWithValue("@Name", name);
-                command.Parameters.AddWithValue("@Address", address);
-                command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                command.Parameters.AddWithValue("@Passport", passport);
+                command.Parameters.AddWithValue("@Contact", contact);
 
                 try
                 {
@@ -80,16 +103,16 @@ namespace CRMS
             }
         }
 
-        public void UpdateCustomer(int customerId, string name, string address, string phoneNumber)
+        public void UpdateCustomer(string customerId, string name, string passport, string contact)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Customers SET Name = @Name, Address = @Address, PhoneNumber = @PhoneNumber WHERE CustomerID = @CustomerID";
+                string query = "UPDATE Customers SET Id = @CustomerID, Name = @Name,Passport = @Passport, Contact = @Contact WHERE Id = @CustomerID";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@CustomerID", customerId);
                 command.Parameters.AddWithValue("@Name", name);
-                command.Parameters.AddWithValue("@Address", address);
-                command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                command.Parameters.AddWithValue("@Passport", passport);
+                command.Parameters.AddWithValue("@Contact", contact);
 
                 try
                 {
@@ -104,11 +127,12 @@ namespace CRMS
             }
         }
 
-        public void DeleteCustomer(int customerId)
+        public void DeleteCustomer(string customerId)
         {
+            MessageBox.Show(customerId);
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM Customers WHERE CustomerID = @CustomerID";
+                string query = "DELETE FROM Customers WHERE Id = @CustomerID";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@CustomerID", customerId);
 
@@ -121,19 +145,21 @@ namespace CRMS
                 catch (Exception ex)
                 {
                     Console.WriteLine("An error occurred: " + ex.Message);
+                    
                 }
             }
         }
 
-        public void AddCar(string make, string model, int year)
+        public void AddCar(string number, string type, string name, int rent)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Cars (Make, Model, Year) VALUES (@Make, @Model, @Year)";
+                string query = "INSERT INTO Cars (Number, Type, Name, Rent) VALUES (@Number, @Type, @Name, @Rent)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Make", make);
-                command.Parameters.AddWithValue("@Model", model);
-                command.Parameters.AddWithValue("@Year", year);
+                command.Parameters.AddWithValue("@Number", number);
+                command.Parameters.AddWithValue("@Type", type);
+                command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Rent", rent);
 
                 try
                 {
@@ -148,16 +174,16 @@ namespace CRMS
             }
         }
 
-        public void UpdateCar(int carId, string make, string model, int year)
+        public void UpdateCar(string number, string type, string name, int rent)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = "UPDATE Cars SET Make = @Make, Model = @Model, Year = @Year WHERE CarID = @CarID";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@CarID", carId);
-                command.Parameters.AddWithValue("@Make", make);
-                command.Parameters.AddWithValue("@Model", model);
-                command.Parameters.AddWithValue("@Year", year);
+                command.Parameters.AddWithValue("@Number", number);
+                command.Parameters.AddWithValue("@Type", type);
+                command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Rent", rent);
 
                 try
                 {
@@ -172,35 +198,38 @@ namespace CRMS
             }
         }
 
-        public void DeleteCar(int carId)
+        public void DeleteCar(string carno)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM Cars WHERE CarID = @CarID";
+                string query = "DELETE FROM Cars WHERE Number = @CarID";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@CarID", carId);
+                command.Parameters.AddWithValue("@CarID", carno);
 
                 try
                 {
                     connection.Open();
                     command.ExecuteNonQuery();
-                    Console.WriteLine("Car deleted successfully.");
+                    MessageBox.Show("Car Removed Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show("Failed! " + ex.Message,"Error");
                     Console.WriteLine("An error occurred: " + ex.Message);
                 }
             }
         }
 
-        public void AddDriver(string name, string licenseNumber)
+        public void AddDriver(string id, string name, string licenseNumber, string contact)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Drivers (Name, LicenseNumber) VALUES (@Name, @LicenseNumber)";
+                string query = "INSERT INTO Drivers (Id, Name, LicenseNumber, Contact) VALUES (@Id, @Name, @LicenseNumber, @Contact)";
                 SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@LicenseNumber", licenseNumber);
+                command.Parameters.AddWithValue("@Contact", contact);
 
                 try
                 {
@@ -215,15 +244,16 @@ namespace CRMS
             }
         }
 
-        public void UpdateDriver(int driverId, string name, string licenseNumber)
+        public void UpdateDriver(string id, string name, string licenseNumber, string contact)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Drivers SET Name = @Name, LicenseNumber = @LicenseNumber WHERE DriverID = @DriverID";
+                string query = "UPDATE Drivers SET Name = @Name, LicenseNumber = @LicenseNumber, Contact = @Contact WHERE Id = @Id";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@DriverID", driverId);
+                command.Parameters.AddWithValue("@Id", id);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@LicenseNumber", licenseNumber);
+                command.Parameters.AddWithValue("@Contact", contact);
 
                 try
                 {
@@ -238,11 +268,11 @@ namespace CRMS
             }
         }
 
-        public void DeleteDriver(int driverId)
+        public void DeleteDriver(string driverId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM Drivers WHERE DriverID = @DriverID";
+                string query = "DELETE FROM Drivers WHERE Id = @DriverID";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@DriverID", driverId);
 

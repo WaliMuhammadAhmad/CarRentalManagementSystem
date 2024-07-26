@@ -24,7 +24,7 @@ namespace CRMS
             label5.Text = "Add Car";
         }
 
-
+        DatabaseHelper dbHelper = new DatabaseHelper();
 
         private void DataGridView()
         {
@@ -63,7 +63,8 @@ namespace CRMS
             {
                 
                     // Add a new Car object to the cars list
-                    cars.Add(new Car(textBox1.Text, textBox3.Text, textBox2.Text, Convert.ToInt32(textBox4.Text)));
+                    cars.Add(new Car(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text)));
+                    dbHelper.AddCar(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text));
                     MessageBox.Show("Car added successfully!");
                     // Clear all text boxes
                     textBox1.Clear();
@@ -95,25 +96,16 @@ namespace CRMS
             label3.Visible = false;
             button4.Visible = true;
 
-            Car objToRemove = new Car();
-            foreach (Car item in cars)
+            string Car_NO = textBox1.Text;
+            
+            if (Car_NO != null)
             {
-                if (item.Car_NO == textBox1.Text)
-                {
-                    objToRemove = item;
-                    break;
-                }
-            }
-
-            if (objToRemove != null)
-            {
-                cars.Remove(objToRemove);
-                MessageBox.Show("Car Removed Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dbHelper.DeleteCar(Car_NO);
                 DataGridView();
             }
             else
             {
-                MessageBox.Show("Car number does not Exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill in all fields!");
             }
 
             textBox1.Clear();

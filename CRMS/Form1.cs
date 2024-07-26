@@ -17,16 +17,22 @@ namespace CRMS
             InitializeComponent();
         }
 
+        DatabaseHelper dbHelper = new DatabaseHelper();
+
         private void button1_Click(object sender, EventArgs e)
         {
             if(textBox1.Text!="" && textBox2.Text!="")
             {
-               if(textBox1.Text=="Admin" && textBox2.Text=="1234")
-               {
+                string username = textBox1.Text;
+                string password = textBox2.Text;
+                
+                bool loginSuccess = dbHelper.AdminLogin(username, password);
+                if (loginSuccess)
+                {
                     Dashboard admin = new Dashboard();
                     admin.Show();
                     this.Hide();
-               }
+                }
                 else
                 {
                     MessageBox.Show("Wrong username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
