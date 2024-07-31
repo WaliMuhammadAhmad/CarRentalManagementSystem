@@ -33,14 +33,14 @@ namespace CRMS
                     MessageBox.Show("Invalid car Number");
                 }
             }
-            //if (this.number_of_days > 0 && this.number_of_days < 5)
-            //{
-            //    total_rent = 4000;
-            //}
-            //else if (this.number_of_days > 5)
-            //{
-            //    total_rent = 6000;
-            //}
+            if (this.number_of_days > 0 && this.number_of_days < 5)
+            {
+                total_rent = 4000;
+            }
+            else if (this.number_of_days > 5)
+            {
+                total_rent = 6000;
+            }
         }
     
         public string CNname { get { return this.customer_name; } set { this.customer_name = value; } }
@@ -48,8 +48,5 @@ namespace CRMS
         public int NumberOfDays { get {  return this.number_of_days; } set { this.NumberOfDays = value; } }
         public string Cnumber { get { return this.Car_number; } set { this.Car_number = value; } }
         public int Totalamount { get {  return this.total_rent; } set { this.total_rent = value; } }
-    }
-
-    
-   
+    }  
 }

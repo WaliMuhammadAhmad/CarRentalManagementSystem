@@ -64,15 +64,13 @@ namespace CRMS
                 
                     // Add a new Car object to the cars list
                     cars.Add(new Car(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text)));
-                    dbHelper.AddCar(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text));
+                    dbHelper.AddCar(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text),1);
                     MessageBox.Show("Car added successfully!");
                     // Clear all text boxes
                     textBox1.Clear();
                     textBox2.Clear();
                     textBox3.Clear();
                     textBox4.Clear();
-                    // Update the DataGridView
-                    DataGridView();
 
             }
             else

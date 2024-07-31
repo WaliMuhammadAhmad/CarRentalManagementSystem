@@ -12,6 +12,7 @@ namespace CRMS
 {
     public partial class Rent : Form
     {
+        DatabaseHelper dbHelper = new DatabaseHelper();
         public static List<rented> list = new List<rented>();
         public Rent()
 
@@ -61,6 +62,7 @@ namespace CRMS
             { 
                 list.Add(new rented(comboBox1.Text,comboBox2.Text,comboBox3.Text, int.Parse(textBox1.Text)));
                 string num = comboBox3.Text;
+                dbHelper.RentCar(0, int.Parse(textBox1.Text), num);
                 foreach(rented rented in list)
                 {
                     if (rented.Cnumber == comboBox3.Text)

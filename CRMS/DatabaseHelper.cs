@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Windows.Forms;
+using System.Data;
+using System.Xml.Linq;
 
 namespace CRMS
 {
@@ -56,28 +58,6 @@ namespace CRMS
                 }
             }
         }
-
-        //public void TotalCars(Boolean aval)
-        //{
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        string query = "SELECT * FROM Cars WHERE Avalaible = @avalaible";
-        //        SqlCommand command = new SqlCommand(query, connection);
-        //        command.Parameters.AddWithValue("@avalaible", aval);
-
-        //        try
-        //        {
-        //            connection.Open();
-        //            int result = (int)command.ExecuteScalar();
-        //            //return result;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine("An error occurred: " + ex.Message);
-        //            //return false;
-        //        }
-        //    }
-        //}
 
         public void AddCustomer(string id, string name, string passport, string contact)
         {
@@ -150,16 +130,17 @@ namespace CRMS
             }
         }
 
-        public void AddCar(string number, string type, string name, int rent)
+        public void AddCar(string number, string type, string name, int rent, int available)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Cars (Number, Type, Name, Rent) VALUES (@Number, @Type, @Name, @Rent)";
+                string query = "INSERT INTO Cars (Number, Type, Name, Rent, Avalaible) VALUES (@Number, @Type, @Name, @Rent, @Avalaible)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Number", number);
                 command.Parameters.AddWithValue("@Type", type);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Rent", rent);
+                command.Parameters.AddWithValue("@Avalaible", available);
 
                 try
                 {
@@ -178,7 +159,7 @@ namespace CRMS
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Cars SET Make = @Make, Model = @Model, Year = @Year WHERE CarID = @CarID";
+                string query = "UPDATE Cars SET Number = @Number, Type = @Type, Name = @Name, Rent = @Rent WHERE Number = @CarID";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Number", number);
                 command.Parameters.AddWithValue("@Type", type);
@@ -215,6 +196,80 @@ namespace CRMS
                 catch (Exception ex)
                 {
                     MessageBox.Show("Failed! " + ex.Message,"Error");
+                    Console.WriteLine("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
+        public void TotalCars(DataGridView dataGridView)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Cars";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                try
+                {
+                    // Create a DataTable to hold the data
+                    DataTable table = new DataTable();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+
+                    // Set the DataTable as the DataGridView's data source
+                    dataGridView.DataSource = table;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
+        public void AvalaibleCards(DataGridView dataGridView, int available)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Cars WHERE Avalaible = @available";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@available", available);
+
+                try
+                {
+                    connection.Open();
+
+                    // Create a DataTable to hold the data
+                    DataTable table = new DataTable();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+
+                    // Set the DataTable as the DataGridView's data source
+                    dataGridView.DataSource = table;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
+        public void RentCar(int available,int days, string num)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Cars SET Avalaible = @Avalaible, RentDay = @Days WHERE Number = @CarID";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Avalaible", available);
+                command.Parameters.AddWithValue("@Days", days);
+                command.Parameters.AddWithValue("@CarID", num);
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Car Rented successfully.");
+                }
+                catch (Exception ex)
+                {
                     Console.WriteLine("An error occurred: " + ex.Message);
                 }
             }

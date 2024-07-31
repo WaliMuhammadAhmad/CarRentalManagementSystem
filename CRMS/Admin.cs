@@ -12,6 +12,8 @@ namespace CRMS
 {
     public partial class Dashboard : Form
     {
+        DatabaseHelper dbHelper = new DatabaseHelper();
+
         public Dashboard()
         {
             InitializeComponent();
@@ -48,25 +50,6 @@ namespace CRMS
         private void button1_Click(object sender, EventArgs e)
         {
             
-                // Create a DataTable to hold the data
-                DataTable table = new DataTable();
-                table.Columns.Add("ID", typeof(string));
-                table.Columns.Add("Car Type", typeof(string));
-                table.Columns.Add("Model Name", typeof(string));
-                table.Columns.Add("Rent Per day", typeof(string));
-
-                // Add data to the DataTable
-                foreach (Car car in Cars.cars)
-                {
-                    table.Rows.Add(car.Car_NO, car.Car_TYPE, car.Model_Name, car.Rupees_per_day);
-                }
-
-                // Set the DataTable as the DataGridView's data source
-                dataGridView1.DataSource = table;
-            }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
             // Create a DataTable to hold the data
             DataTable table = new DataTable();
             table.Columns.Add("ID", typeof(string));
@@ -74,39 +57,24 @@ namespace CRMS
             table.Columns.Add("Model Name", typeof(string));
             table.Columns.Add("Rent Per day", typeof(string));
 
-            // Add data to the DataTable
-            foreach (Car car in Cars.cars)
-            {
-                if (car.availablity == false)
-                {
-                    table.Rows.Add(car.Car_NO, car.Car_TYPE, car.Model_Name, car.Rupees_per_day);
-                }
-            }
 
             // Set the DataTable as the DataGridView's data source
             dataGridView1.DataSource = table;
+
+            // Call the TotalCars method to populate the DataGridView
+            dbHelper.TotalCars(dataGridView1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Call the TotalCars method to populate the DataGridView
+            dbHelper.AvalaibleCards(dataGridView1, 0);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Create a DataTable to hold the data
-            DataTable table = new DataTable();
-            table.Columns.Add("ID", typeof(string));
-            table.Columns.Add("Car Type", typeof(string));
-            table.Columns.Add("Model Name", typeof(string));
-            table.Columns.Add("Rent Per day", typeof(string));
-
-            // Add data to the DataTable
-            foreach (Car car in Cars.cars)
-            {
-                if (car.availablity == true)
-                {
-                    table.Rows.Add(car.Car_NO, car.Car_TYPE, car.Model_Name, car.Rupees_per_day);
-                }
-            }
-
-            // Set the DataTable as the DataGridView's data source
-            dataGridView1.DataSource = table;
+            // Call the TotalCars method to populate the DataGridView
+            dbHelper.AvalaibleCards(dataGridView1,1);
         }
 
         private void label3_MouseEnter(object sender, EventArgs e)
