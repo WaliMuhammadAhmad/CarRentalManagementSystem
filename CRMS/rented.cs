@@ -42,7 +42,39 @@ namespace CRMS
                 total_rent = 6000;
             }
         }
-    
+
+        public int CalculateRent(int numberofdays) 
+        {
+            foreach (Car c in Cars.cars)
+            {
+                if (c.Car_NO == this.Car_number)
+                {
+                    total_rent = c.Rupees_per_day * number_of_days;
+                    c.availablity = false;
+                    return total_rent;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid car Number");
+                    return 0;
+                }
+            }
+            return 0;
+        }
+
+        public void CalculateRent()
+        {
+            if (this.number_of_days > 7)
+            {
+                total_rent += 20;
+            }
+            else if (this.number_of_days > 7 && this.number_of_days < 14)
+            {
+                total_rent += 60;
+            }
+        }
+
+
         public string CNname { get { return this.customer_name; } set { this.customer_name = value; } }
         public string DName {  get { return this.Driver_name; }set { this.Driver_name = value; } }
         public int NumberOfDays { get {  return this.number_of_days; } set { this.NumberOfDays = value; } }

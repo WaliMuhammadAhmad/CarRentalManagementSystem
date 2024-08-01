@@ -17,7 +17,7 @@ namespace CRMS
             InitializeComponent();
         }
 
-        DatabaseHelper dbHelper = new DatabaseHelper();
+        DatabaseHelper dbHelper = DatabaseHelper.Instance;
 
         private void button1_Click(object sender, EventArgs e)
         {

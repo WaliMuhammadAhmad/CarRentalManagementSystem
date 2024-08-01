@@ -12,7 +12,8 @@ namespace CRMS
 {
     public partial class Rent : Form
     {
-        DatabaseHelper dbHelper = new DatabaseHelper();
+        DatabaseHelper dbHelper = DatabaseHelper.Instance;
+
         public static List<rented> list = new List<rented>();
         public Rent()
 

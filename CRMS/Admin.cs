@@ -12,7 +12,7 @@ namespace CRMS
 {
     public partial class Dashboard : Form
     {
-        DatabaseHelper dbHelper = new DatabaseHelper();
+        DatabaseHelper dbHelper = DatabaseHelper.Instance;
 
         public Dashboard()
         {
@@ -68,13 +68,13 @@ namespace CRMS
         private void button2_Click(object sender, EventArgs e)
         {
             // Call the TotalCars method to populate the DataGridView
-            dbHelper.AvalaibleCards(dataGridView1, 0);
+            dbHelper.TotalCars(dataGridView1, 0);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             // Call the TotalCars method to populate the DataGridView
-            dbHelper.AvalaibleCards(dataGridView1,1);
+            dbHelper.TotalCars(dataGridView1,1);
         }
 
         private void label3_MouseEnter(object sender, EventArgs e)

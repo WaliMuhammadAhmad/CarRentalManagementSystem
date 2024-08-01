@@ -13,11 +13,39 @@ namespace CRMS
 {
     internal class DatabaseHelper
     {
+        // Private static variable to hold the single instance of the class
+        private static DatabaseHelper _instance;
+
+        // Private static object for locking
+        private static readonly object _lock = new object();
+
+        // Private field to hold the connection string
         private string connectionString;
 
-        public DatabaseHelper()
+        // Private constructor to prevent instantiation
+        private DatabaseHelper()
         {
             connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+        }
+
+        // Public static method to provide access to the single instance
+        public static DatabaseHelper Instance
+        {
+            get
+            {
+                // Double-check locking for thread safety
+                if (_instance == null)
+                {
+                    lock (_lock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new DatabaseHelper();
+                        }
+                    }
+                }
+                return _instance;
+            }
         }
 
         public void OpenConnection()
@@ -130,6 +158,27 @@ namespace CRMS
             }
         }
 
+        public void GetCustomer(DataGridView dataGridView)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Customers";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                try
+                {
+                    DataTable table = new DataTable();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+                    dataGridView.DataSource = table;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occurred while fetching the customers: " + ex.Message);
+                }
+            }
+        }
+
         public void AddCar(string number, string type, string name, int rent, int available)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -225,7 +274,7 @@ namespace CRMS
             }
         }
 
-        public void AvalaibleCards(DataGridView dataGridView, int available)
+        public void TotalCars(DataGridView dataGridView, int available)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -340,6 +389,27 @@ namespace CRMS
                 catch (Exception ex)
                 {
                     Console.WriteLine("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
+        public void GetDrivers(DataGridView dataGridView)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Drivers";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                try
+                {
+                    DataTable table = new DataTable();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+                    dataGridView.DataSource = table;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occurred while fetching the customers: " + ex.Message);
                 }
             }
         }

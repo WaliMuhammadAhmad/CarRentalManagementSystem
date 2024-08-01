@@ -16,7 +16,8 @@ namespace CRMS
         Class1 obj=new Class1();
         int index = 0;
         bool flag = true;
-        DatabaseHelper dbHelper = new DatabaseHelper();
+        DatabaseHelper dbHelper = DatabaseHelper.Instance;
+
         public Driver()
         {
             InitializeComponent();

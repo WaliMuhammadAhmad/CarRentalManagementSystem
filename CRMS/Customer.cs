@@ -18,7 +18,8 @@ namespace CRMS
         Cusromer obj;
         bool flag = true;
         int index = 0;
-        DatabaseHelper dbHelper = new DatabaseHelper();
+        DatabaseHelper dbHelper = DatabaseHelper.Instance;
+
         public Customer()
         {
             InitializeComponent();

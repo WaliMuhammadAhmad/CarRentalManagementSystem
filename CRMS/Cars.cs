@@ -16,6 +16,9 @@ namespace CRMS
     public partial class Cars : Form
     {
         public static List<Car> cars = new List<Car>();
+
+        DatabaseHelper dbHelper = DatabaseHelper.Instance;
+
         bool flag = true;
         public Cars()
         {
@@ -24,7 +27,6 @@ namespace CRMS
             label5.Text = "Add Car";
         }
 
-        DatabaseHelper dbHelper = new DatabaseHelper();
 
         private void DataGridView()
         {
@@ -63,7 +65,7 @@ namespace CRMS
             {
                 
                     // Add a new Car object to the cars list
-                    cars.Add(new Car(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text)));
+                    //cars.Add(new Car(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text)));
                     dbHelper.AddCar(textBox1.Text, textBox2.Text, textBox3.Text, Convert.ToInt32(textBox4.Text),1);
                     MessageBox.Show("Car added successfully!");
                     // Clear all text boxes
